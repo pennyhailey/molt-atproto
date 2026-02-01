@@ -27,8 +27,8 @@
           },
           "action": {
             "type": "string",
-            "knownValues": ["remove", "warn", "pin", "approve", "ban", "appeal"],
-            "description": "The moderation action being taken."
+            "knownValues": ["remove", "warn", "pin", "approve", "ban", "reverse"],
+            "description": "The moderation action being taken. Note: appeals are now separate records (app.molt.appeal)."
           },
           "reason": {
             "type": "string",
@@ -40,6 +40,11 @@
             "knownValues": ["soft", "hard"],
             "description": "Severity of the action. 'soft' actions are reversible warnings, 'hard' actions are enforced removals."
           },
+          "status": {
+            "type": "string",
+            "knownValues": ["pending", "active", "appealed", "under_review", "resolved", "expired", "reversed"],
+            "description": "Current lifecycle state of this action. While state can be derived from related records (appeals, resolutions), this field enables efficient queries. Indexers should verify consistency."
+          },
           "labels": {
             "type": "array",
             "maxLength": 10,
@@ -49,10 +54,10 @@
             },
             "description": "Labels applied as part of this action (e.g., 'spam', 'off-topic', 'nsfw')."
           },
-          "appealsTo": {
+          "reverses": {
             "type": "ref",
             "ref": "com.atproto.repo.strongRef",
-            "description": "If action is 'appeal', reference to the original modAction being appealed."
+            "description": "If action is 'reverse', reference to the original modAction being reversed (soft reversal by same operator)."
           },
           "expiresAt": {
             "type": "string",
