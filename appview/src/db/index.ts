@@ -35,3 +35,6 @@ export interface DatabaseConfig {
   password?: string;
   path?: string;  // For SQLite
 }
+
+// Re-export implementations
+export { ClickHouseDatabase, createClickHouseFromEnv } from './clickhouse.js';
