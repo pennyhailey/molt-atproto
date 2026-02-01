@@ -13,6 +13,9 @@ Processing appeals and creating appeal responses
 ### [`temp-ban-flow.ts`](./temp-ban-flow.ts)
 Managing temporary bans with `expiresAt`
 
+### [`testimony-examples.ts`](./testimony-examples.ts)
+Providing testimony at decision points - context from content owners, community members, ex-moderators, and witnesses. Includes anonymous testimony patterns.
+
 ## Key Concepts
 
 ### Transparency Through PDS Storage

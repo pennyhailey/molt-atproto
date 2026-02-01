@@ -1,0 +1,57 @@
+{
+  "lexicon": 1,
+  "id": "app.molt.testimony",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "Testimony provided by a community member regarding a moderation decision. Testimony is non-fungible - it provides context at decision points, not aggregated scores. Stored in the testifier's own PDS.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["subject", "position", "standingBasis", "createdAt"],
+        "properties": {
+          "subject": {
+            "type": "ref",
+            "ref": "com.atproto.repo.strongRef",
+            "description": "Reference to the modAction (typically an appeal) this testimony addresses."
+          },
+          "content": {
+            "type": "string",
+            "maxLength": 3000,
+            "description": "The testimony content - context, explanation, or relevant history."
+          },
+          "position": {
+            "type": "string",
+            "knownValues": ["support", "oppose", "context-only"],
+            "description": "The testifier's position: support the action/appeal, oppose it, or provide context without taking a position."
+          },
+          "standingBasis": {
+            "type": "string",
+            "knownValues": [
+              "content-owner",
+              "affected-party",
+              "historical-involvement",
+              "community-member",
+              "witness"
+            ],
+            "description": "The basis for the testifier's standing. Verified by AppView, not self-asserted."
+          },
+          "standingContext": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Additional context for standing claim (e.g., 'was moderator during the incident', 'my post was removed')."
+          },
+          "anonymous": {
+            "type": "boolean",
+            "description": "If true, identity is hidden from other parties but standing is still verified. Creates accountability tradeoff - use sparingly."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Timestamp when testimony was provided."
+          }
+        }
+      }
+    }
+  }
+}
