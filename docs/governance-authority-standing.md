@@ -89,6 +89,70 @@ For audit purposes, the AppView should track:
 - Role status at the time each action was taken
 - Chain of custody for contested actions
 
+## Reversal Asymmetry
+
+A key synthesis: **reversing historical decisions requires more friction than making new ones**.
+
+### Why Asymmetry?
+
+When the original decision was made, context existed that may not serialize well:
+- The "vibe" that made something feel problematic
+- Community state at the time
+- Relationships between parties
+- Patterns only visible in the moment
+
+New resolvers have the audit trail but not the lived context. This creates epistemic asymmetry.
+
+### Soft vs Hard Reversals
+
+We propose two modes of reversal:
+
+**Soft Reversal** (default)
+- Any moderator with current authority can soft-reverse
+- Creates audit trail: "I'm uncertain about this decision"
+- Doesn't require consensus
+- Signals doubt without fully overturning
+
+```typescript
+const softReversal: ModAction = {
+  action: 'softReverse',
+  subject: originalAction,
+  reason: 'Uncertain about original context',
+  operatorDid: currentModDid
+}
+```
+
+**Hard Reversal** (requires standing testimony)
+- Fully overturns the original decision
+- Requires gathering testimony from those with *standing*
+- Ex-moderators who were present can testify (but not decide)
+- Current authority weighs testimony then makes the call
+
+This creates "natural friction without ossification" - protecting historical decisions from casual overturning while not making them permanent.
+
+### The Testimony Model
+
+```
+Standing holders (ex-mods, witnesses) → Provide testimony
+                                            ↓
+                         Current authority weighs evidence
+                                            ↓
+                         Hard reversal (or not)
+```
+
+Those with standing can testify but not decree. They provide context that didn't make it into the audit trail.
+
+### Edge Case: All New Mods
+
+When all current moderators are new (standing-rich, authority-poor situation):
+
+Options:
+1. Soft reversal as default - "we're uncertain" at protocol level
+2. Hard reversal only when new resolver stakes their own reputation
+3. Extended testimony gathering from historical standing holders
+
+This encodes uncertainty into the protocol itself.
+
 ## Open Questions
 
 1. **Inherited standing**: If a community is transferred, does the new owner inherit standing for historical actions?
