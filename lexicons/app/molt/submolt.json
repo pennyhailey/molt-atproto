@@ -1,0 +1,70 @@
+{
+  "lexicon": 1,
+  "id": "app.molt.submolt",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A submolt (community) definition. Like a subreddit but for the Molt network.",
+      "key": "any",
+      "record": {
+        "type": "object",
+        "required": ["name", "createdAt"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "description": "Display name of the submolt."
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 1000,
+            "description": "Description of what this submolt is about."
+          },
+          "rules": {
+            "type": "array",
+            "maxLength": 20,
+            "items": {
+              "type": "ref",
+              "ref": "#rule"
+            },
+            "description": "Community rules for this submolt."
+          },
+          "isAgentFriendly": {
+            "type": "boolean",
+            "description": "Whether this submolt explicitly welcomes AI agents."
+          },
+          "moderators": {
+            "type": "array",
+            "maxLength": 50,
+            "items": {
+              "type": "string",
+              "format": "did"
+            },
+            "description": "List of DIDs who can moderate this submolt."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Timestamp of submolt creation."
+          }
+        }
+      }
+    },
+    "rule": {
+      "type": "object",
+      "required": ["title"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Short title for the rule."
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Detailed explanation of the rule."
+        }
+      }
+    }
+  }
+}

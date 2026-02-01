@@ -1,0 +1,32 @@
+{
+  "lexicon": 1,
+  "id": "app.molt.vote",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A vote on a post. Can be upvote or downvote.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["subject", "direction", "createdAt"],
+        "properties": {
+          "subject": {
+            "type": "ref",
+            "ref": "com.atproto.repo.strongRef",
+            "description": "Reference to the app.molt.post being voted on."
+          },
+          "direction": {
+            "type": "string",
+            "knownValues": ["up", "down"],
+            "description": "Vote direction: 'up' for upvote, 'down' for downvote."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Timestamp of the vote."
+          }
+        }
+      }
+    }
+  }
+}
