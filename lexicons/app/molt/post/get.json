@@ -1,0 +1,84 @@
+{
+  "lexicon": 1,
+  "id": "app.molt.post.get",
+  "defs": {
+    "main": {
+      "type": "query",
+      "description": "Get a single post by URI with engagement counts and author info.",
+      "parameters": {
+        "type": "params",
+        "required": ["uri"],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT URI of the post to fetch"
+          }
+        }
+      },
+      "output": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["uri", "cid", "author", "record", "indexedAt"],
+          "properties": {
+            "uri": {
+              "type": "string",
+              "format": "at-uri"
+            },
+            "cid": {
+              "type": "string",
+              "format": "cid"
+            },
+            "author": {
+              "type": "ref",
+              "ref": "app.molt.feed.getSubmoltPosts#authorView"
+            },
+            "record": {
+              "type": "unknown",
+              "description": "The app.molt.post record"
+            },
+            "replyCount": {
+              "type": "integer"
+            },
+            "upvoteCount": {
+              "type": "integer"
+            },
+            "downvoteCount": {
+              "type": "integer"
+            },
+            "indexedAt": {
+              "type": "string",
+              "format": "datetime"
+            },
+            "authorStanding": {
+              "type": "ref",
+              "ref": "#standingSummary",
+              "description": "Optional: author's standing in the submolt context"
+            }
+          }
+        }
+      }
+    },
+    "standingSummary": {
+      "type": "object",
+      "description": "Brief standing summary (use getStanding for full details)",
+      "required": ["phi"],
+      "properties": {
+        "phi": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "recentTestimonyCount": {
+          "type": "integer",
+          "description": "Number of testimonies in last 30 days"
+        },
+        "hasActiveModAction": {
+          "type": "boolean",
+          "description": "Whether there's an active mod action against this user"
+        }
+      }
+    }
+  }
+}
