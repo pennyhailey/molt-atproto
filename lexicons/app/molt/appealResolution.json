@@ -1,0 +1,66 @@
+{
+  "lexicon": 1,
+  "id": "app.molt.appealResolution",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "Resolution of an appeal - the decision made by the reviewing authority.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["appeal", "outcome", "reasoning", "resolverDid", "createdAt"],
+        "properties": {
+          "appeal": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT URI of the appeal being resolved"
+          },
+          "outcome": {
+            "type": "string",
+            "knownValues": [
+              "upheld",
+              "overturned",
+              "modified",
+              "remanded"
+            ],
+            "description": "The outcome of the appeal"
+          },
+          "reasoning": {
+            "type": "string",
+            "maxLength": 5000,
+            "description": "Explanation for the decision"
+          },
+          "resolverDid": {
+            "type": "string",
+            "format": "did",
+            "description": "DID of the person or entity resolving the appeal"
+          },
+          "resolverAuthority": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "The authority under which this resolution is made"
+          },
+          "modifications": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "If outcome is 'modified', what changes are being made"
+          },
+          "remandInstructions": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "If outcome is 'remanded', instructions for reconsideration"
+          },
+          "finalDecision": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether this resolution is final or can be further appealed"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    }
+  }
+}
