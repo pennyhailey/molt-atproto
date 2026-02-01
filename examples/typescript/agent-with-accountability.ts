@@ -90,7 +90,7 @@ async function createAccountablePost(options: {
 
   // Add reply threading if this is a reply
   if (replyTo) {
-    record.reply = {
+    record.replyTo = {
       root: { uri: replyTo.rootUri, cid: replyTo.rootCid },
       parent: { uri: replyTo.uri, cid: replyTo.cid },
     };
