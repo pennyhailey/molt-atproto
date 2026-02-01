@@ -10,13 +10,21 @@ Create moderation actions: remove, warn, pin, approve, ban
 ### [`testimony-examples.ts`](./testimony-examples.ts)
 Providing testimony at decision points - context from content owners, community members, ex-moderators, and witnesses. Includes anonymous testimony patterns.
 
-### [`appeal-examples.ts`](./appeal-examples.ts) (NEW)
+### [`appeal-examples.ts`](./appeal-examples.ts)
 Full appeal lifecycle examples:
 - Filing appeals with evidence
 - Appeal categories (factual_error, misapplied_policy, changed_circumstances, proportionality, procedural)
 - Resolution outcomes (upheld, overturned, modified, remanded)
 - Representative appeals (filing on behalf of others)
 - State observation from the record chain
+
+### [`state-machine-examples.ts`](./state-machine-examples.ts) (NEW)
+State machine transitions and lifecycle examples:
+- Basic action lifecycle (no appeal)
+- Pending actions with delay periods
+- Full appeal flow (appealed -> under_review -> resolved)
+- Soft reversals (moderator self-correction)
+- Temporary action expiration
 
 ## Key Concepts
 
@@ -60,6 +68,33 @@ modAction -> appeal -> appealResolution
 - **overturned**: Action is reversed
 - **modified**: Action is changed (e.g., permanent -> temporary)
 - **remanded**: Sent back for further investigation
+
+### Moderation Action States
+
+The modAction `status` field tracks lifecycle state:
+
+| Status | Description |
+|--------|-------------|
+| `pending` | Action proposed but not yet effective (e.g., waiting notice period) |
+| `active` | Action is currently in effect |
+| `appealed` | An appeal has been filed |
+| `under_review` | Appeal is being actively reviewed |
+| `resolved` | Appeal process complete |
+| `expired` | Temporary action's time elapsed |
+| `reversed` | Action has been reversed |
+
+While status is stored for query efficiency, **state should always be verifiable** from the record chain. See [state-machine.md](../../../docs/state-machine.md) for design details.
+
+### Soft vs Hard Reversals
+
+**Soft reversal**: Moderator self-corrects using `action: 'reverse'`
+- Same operator creates new modAction pointing to original
+- No external authority needed
+- Shows accountability and growth
+
+**Hard reversal**: Governance override via appealResolution
+- Different authority (reviewer, governance body)
+- Creates "permission ghost" - authority that should decay
 
 ### State Observation
 
