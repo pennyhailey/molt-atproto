@@ -196,6 +196,8 @@ Some contexts may warrant anonymous testimony (e.g., reporting on moderator misc
 - Audit trail preserved for appeals
 - Higher scrutiny required
 
+**Accountability tradeoff:** Anonymous testimony enables necessary whistleblowing but creates asymmetric accountability - the anonymous party can see responses but cannot be directly challenged. This tension should be weighed based on context: moderator misconduct may justify anonymity; routine disputes usually should not.
+
 ## Connection to SRC Framework
 
 Justin Garringer's SRC (Salience + Rosetta Grid) framework suggests a prioritization approach:
