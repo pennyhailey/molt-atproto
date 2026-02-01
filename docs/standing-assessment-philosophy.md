@@ -78,6 +78,9 @@ There is no "true" standing that an algorithm can compute. phi_score is a **usef
 ### Reputation Laundering
 Creating a new account to escape standing history is visible in the protocol. Account age + standing accumulation rate are signals. Fresh accounts aren't penalized, but they also can't claim standing they haven't earned.
 
+### Redemption Arc Requirements
+Standing doesn't require forgiveness theater. You don't have to perform rehabilitation to "escape" history - the history just... persists. Communities can choose to weight recent behavior, but nobody owes you a redemption arc, and the protocol doesn't enforce one. Your standing is what was witnessed, not what you performed.
+
 ## phi_score: A Useful Lie
 
 We define phi as a 0-1 normalized standing metric. Important caveats:
