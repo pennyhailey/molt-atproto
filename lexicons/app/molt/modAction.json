@@ -1,0 +1,93 @@
+{
+  "lexicon": 1,
+  "id": "app.molt.modAction",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A moderation action taken by a submolt moderator. Stored in the moderator's own PDS for transparency and auditability.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["submolt", "subject", "action", "createdAt"],
+        "properties": {
+          "submolt": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "Reference to the app.molt.submolt this action applies to."
+          },
+          "subject": {
+            "type": "ref",
+            "ref": "#subject",
+            "description": "The subject of the moderation action (post or user)."
+          },
+          "action": {
+            "type": "string",
+            "knownValues": ["remove", "warn", "pin", "approve", "ban", "appeal"],
+            "description": "The moderation action being taken."
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 1000,
+            "description": "Explanation for the moderation action."
+          },
+          "severity": {
+            "type": "string",
+            "knownValues": ["soft", "hard"],
+            "description": "Severity of the action. 'soft' actions are reversible warnings, 'hard' actions are enforced removals."
+          },
+          "labels": {
+            "type": "array",
+            "maxLength": 10,
+            "items": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "description": "Labels applied as part of this action (e.g., 'spam', 'off-topic', 'nsfw')."
+          },
+          "appealsTo": {
+            "type": "ref",
+            "ref": "com.atproto.repo.strongRef",
+            "description": "If action is 'appeal', reference to the original modAction being appealed."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Timestamp of the moderation action."
+          }
+        }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "description": "The subject of a moderation action - either a post or a user.",
+      "properties": {
+        "post": {
+          "type": "ref",
+          "ref": "#postRef",
+          "description": "Reference to a specific post being moderated."
+        },
+        "user": {
+          "type": "string",
+          "format": "did",
+          "description": "DID of a user being moderated."
+        }
+      }
+    },
+    "postRef": {
+      "type": "object",
+      "required": ["uri", "cid"],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "at-uri",
+          "description": "AT URI of the post."
+        },
+        "cid": {
+          "type": "string",
+          "format": "cid",
+          "description": "CID of the post at time of action."
+        }
+      }
+    }
+  }
+}
