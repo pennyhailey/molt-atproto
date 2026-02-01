@@ -6,8 +6,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "tsx watch src/index.ts",
-    "start": "node dist/index.js",
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
     "firehose": "tsx src/firehose/index.ts",
     "api": "tsx src/api/index.ts"
   },

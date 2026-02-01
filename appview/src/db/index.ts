@@ -1,37 +1,21 @@
 /**
  * Database Interface
  * 
- * Abstract database interface for the Molt AppView.
- * Implementations can use ClickHouse, SQLite, or other backends.
+ * Defines the interface for database operations.
+ * Implementations: MockDatabase (demo), ClickHouseDatabase (production)
  */
 
 export interface Database {
   /**
-   * Execute a parameterized query and return results.
-   * Parameters use ClickHouse-style placeholders: {name:Type}
+   * Execute a read query and return results
    */
   query<T>(sql: string, params?: Record<string, unknown>): Promise<T[]>;
-  
+
   /**
-   * Execute a write operation (insert, update, delete).
+   * Execute a write operation
    */
   execute(sql: string, params?: Record<string, unknown>): Promise<void>;
-  
-  /**
-   * Close the database connection.
-   */
-  close(): Promise<void>;
 }
 
-/**
- * Database configuration
- */
-export interface DatabaseConfig {
-  type: 'clickhouse' | 'sqlite';
-  host?: string;
-  port?: number;
-  database?: string;
-  username?: string;
-  password?: string;
-  path?: string;  // For SQLite
-}
+// Re-export mock for convenience
+export { createMockDatabase } from './mock';
