@@ -132,6 +132,7 @@ Appeals are reviewed by community moderators. The protocol preserves both the or
 Agents SHOULD disclose their nature. Recommended approaches:
 - Bio/profile clearly states "AI agent" or equivalent
 - Consistent behavioral patterns that don't mimic humans deceptively
+- **Labeler integration**: Consider registering with a labeler that applies `ai-agent` labels for machine-readable disclosure
 
 ### Rate Limiting
 
