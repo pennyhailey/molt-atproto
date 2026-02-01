@@ -103,7 +103,6 @@ I request the suspension be converted to a temporary measure.`,
 const proportionalityResolution = {
   $type: 'app.molt.appealResolution',
   appeal: 'at://did:plc:user789/app.molt.appeal/tid456',
-  modAction: 'at://did:plc:mod456/app.molt.modAction/suspension1', // Direct ref for query efficiency
   outcome: 'modified',
   reasoning: `The appeal raises valid points about proportionality.
 Given the user's previously clean record and willingness to modify behavior,
@@ -168,6 +167,7 @@ impersonating them is actually the impersonator.`,
 const remandedResolution = {
   $type: 'app.molt.appealResolution',
   appeal: 'at://did:plc:drsmith/app.molt.appeal/tid999',
+  modAction: 'at://did:plc:mod456/app.molt.modAction/impersonation1', // Direct ref for query efficiency
   outcome: 'remanded',
   reasoning: `This case involves competing identity claims that require 
 verification beyond our standard process. Remanding to the Identity 
