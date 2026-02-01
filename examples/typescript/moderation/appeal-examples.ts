@@ -55,6 +55,7 @@ This is not misinformation but accurate reporting of published research.`,
 const factualErrorResolution = {
   $type: 'app.molt.appealResolution',
   appeal: 'at://did:plc:user123/app.molt.appeal/tid123',
+  modAction: 'at://did:plc:mod456/app.molt.modAction/xyz', // Direct ref for query efficiency
   outcome: 'overturned',
   reasoning: `Upon review, the user correctly cited a peer-reviewed study. 
 The original moderation action was based on incomplete verification.
