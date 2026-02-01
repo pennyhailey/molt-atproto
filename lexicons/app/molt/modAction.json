@@ -49,6 +49,11 @@
             "ref": "com.atproto.repo.strongRef",
             "description": "If action is 'appeal', reference to the original modAction being appealed."
           },
+          "expiresAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Optional expiration timestamp for temporary actions (e.g., temp bans). If absent, action is permanent."
+          },
           "createdAt": {
             "type": "string",
             "format": "datetime",
