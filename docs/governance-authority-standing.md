@@ -153,6 +153,50 @@ Options:
 
 This encodes uncertainty into the protocol itself.
 
+## Soft vs Hard Reversals
+
+Not all reversals are equal. The protocol recognizes an asymmetry:
+
+**Soft reversals** (e.g., restoring content that was removed):
+- Generally lower barrier
+- Evidence of original action is preserved
+- "Erring on the side of visibility"
+
+**Hard reversals** (e.g., permanently removing restored content):
+- Higher barrier - requires more standing testimony
+- Creates a stronger commitment signal
+- "We're confident enough to override the override"
+
+This asymmetry emerges naturally from collective uncertainty. When trust is degraded through repeated reversals, the φ threshold rises - requiring more testimony for each subsequent change. Standing testimony before hard reversals is natural friction without ossification.
+
+## Testimony as Non-Fungible
+
+A key insight from @winter.razorgirl.diy: **reputation is fungible, testimony is non-fungible**.
+
+Reputation systems can be gamed because they reduce relationships to numbers. A score of "85" is interchangeable with any other "85". But testimony resists gaming because it's always specific:
+
+- Not "what's your trust score?" but "who would speak for THIS action?"
+- Testimony surfaces at decision points rather than accumulating into scores
+- The relational substrate stays load-bearing - no shortcut through the numbers
+
+You can't optimize for "what would someone say about this" without actually being the kind of person they'd speak for. The specificity IS the Goodhart-resistance.
+
+## Protocol Preserves, Communities Decide
+
+A core design principle: **the protocol preserves evidence; communities decide action**.
+
+The protocol's job is to:
+- Record what happened
+- Track who did what and when
+- Maintain the chain of testimony and appeals
+
+The protocol does NOT:
+- Automatically enforce outcomes
+- Calculate "correct" moderation decisions
+- Override community judgment with algorithmic authority
+
+Communities interpret the evidence. The protocol ensures the evidence can't be erased or manipulated, but the meaning of that evidence is a community question.
+
 ## Open Questions
 
 1. **Inherited standing**: If a community is transferred, does the new owner inherit standing for historical actions?
@@ -162,6 +206,23 @@ This encodes uncertainty into the protocol itself.
 3. **Escalation paths**: When authority holders disagree, how do we resolve?
 
 4. **Cross-community authority**: How do federated communities handle authority boundaries?
+
+## Future Work: Standing-as-Salience and Context Loss
+
+A promising direction for implementation: treating standing as *salience* in a relational graph.
+
+The relationship graph defines potential - who knows whom, who has testified for whom. But potential alone doesn't determine standing. Context activates the graph: when a decision point arises, the relevant portion of the graph "lights up."
+
+This connects to Justin Garringer's salience formula work. φ (phi) as a protocol parameter could represent *context loss* - how much information has been lost about why previous decisions were made.
+
+- Low φ: fresh context, clear reasoning, lower testimony threshold
+- High φ: degraded context, lost reasoning, higher threshold required
+
+This makes uncertainty *measurable* rather than assumed. A φ-dynamic becomes self-protective: degraded trust raises the threshold for further changes, requiring more testimony to proceed.
+
+The hard reversal asymmetry becomes emergent behavior rather than a hardcoded rule - when trust is degraded through repeated reversals, the collective uncertainty naturally raises the barrier for the next change.
+
+See: @justingarringer.bsky.social's work on salience formulas for more on this direction.
 
 ## Credits
 
