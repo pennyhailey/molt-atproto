@@ -1,0 +1,182 @@
+{
+  "lexicon": 1,
+  "id": "app.molt.standing.getStanding",
+  "defs": {
+    "main": {
+      "type": "query",
+      "description": "Get standing information for a DID within a context. Returns phi_score (summary metric) and testimonies (actual evidence).",
+      "parameters": {
+        "type": "params",
+        "required": ["did"],
+        "properties": {
+          "did": {
+            "type": "string",
+            "format": "did",
+            "description": "The DID to get standing for"
+          },
+          "context": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "Optional: submolt context to scope standing (omit for global standing)"
+          }
+        }
+      },
+      "output": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["did", "phi", "methodology", "testimonies"],
+          "properties": {
+            "did": {
+              "type": "string",
+              "format": "did"
+            },
+            "context": {
+              "type": "string",
+              "format": "at-uri",
+              "description": "Context this standing applies to (if scoped)"
+            },
+            "phi": {
+              "type": "ref",
+              "ref": "#phiScore"
+            },
+            "methodology": {
+              "type": "ref",
+              "ref": "#methodology"
+            },
+            "testimonies": {
+              "type": "array",
+              "items": {
+                "type": "ref",
+                "ref": "#testimonyView"
+              },
+              "description": "Recent testimonies about this DID"
+            },
+            "modActions": {
+              "type": "array",
+              "items": {
+                "type": "ref",
+                "ref": "#modActionView"
+              },
+              "description": "Recent moderation actions affecting this DID"
+            }
+          }
+        }
+      }
+    },
+    "phiScore": {
+      "type": "object",
+      "description": "The phi_score - a useful lie. Summary metric computed from testimonies. Don't optimize for this; read the testimonies.",
+      "required": ["value", "computedAt"],
+      "properties": {
+        "value": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Normalized standing score (0-1). Higher is better. But read the testimonies!"
+        },
+        "computedAt": {
+          "type": "string",
+          "format": "datetime",
+          "description": "When this phi was computed"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "How much testimony evidence exists (0 = none, 1 = extensive)"
+        }
+      }
+    },
+    "methodology": {
+      "type": "object",
+      "description": "How phi was computed - assessors compete on methodology, not scale semantics",
+      "required": ["version", "description"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Methodology version identifier"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable explanation of how phi is calculated"
+        },
+        "weights": {
+          "type": "object",
+          "description": "Optional: weights applied to different testimony categories"
+        }
+      }
+    },
+    "testimonyView": {
+      "type": "object",
+      "required": ["uri", "witness", "category", "content", "createdAt"],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "at-uri"
+        },
+        "witness": {
+          "type": "string",
+          "format": "did",
+          "description": "Who provided this testimony"
+        },
+        "witnessHandle": {
+          "type": "string",
+          "format": "handle"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["positive", "negative", "neutral"]
+        },
+        "content": {
+          "type": "string",
+          "description": "The testimony content"
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "at-uri"
+          },
+          "description": "Links to evidence supporting this testimony"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "datetime"
+        }
+      }
+    },
+    "modActionView": {
+      "type": "object",
+      "required": ["uri", "moderator", "actionType", "reason", "createdAt"],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "at-uri"
+        },
+        "moderator": {
+          "type": "string",
+          "format": "did"
+        },
+        "moderatorHandle": {
+          "type": "string",
+          "format": "handle"
+        },
+        "actionType": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "appealed", "reversed", "expired"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "datetime"
+        }
+      }
+    }
+  }
+}

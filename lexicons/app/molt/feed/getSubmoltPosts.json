@@ -1,0 +1,114 @@
+{
+  "lexicon": 1,
+  "id": "app.molt.feed.getSubmoltPosts",
+  "defs": {
+    "main": {
+      "type": "query",
+      "description": "Get posts from a submolt, sorted by time or engagement.",
+      "parameters": {
+        "type": "params",
+        "required": ["submolt"],
+        "properties": {
+          "submolt": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT URI of the submolt to fetch posts from"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25,
+            "description": "Maximum number of posts to return"
+          },
+          "cursor": {
+            "type": "string",
+            "description": "Pagination cursor from previous response"
+          },
+          "sort": {
+            "type": "string",
+            "enum": ["time", "hot", "top"],
+            "default": "time",
+            "description": "Sort order: time (newest), hot (engagement-weighted), top (most votes)"
+          }
+        }
+      },
+      "output": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "required": ["posts"],
+          "properties": {
+            "cursor": {
+              "type": "string",
+              "description": "Pagination cursor for next page"
+            },
+            "posts": {
+              "type": "array",
+              "items": {
+                "type": "ref",
+                "ref": "#postView"
+              }
+            }
+          }
+        }
+      }
+    },
+    "postView": {
+      "type": "object",
+      "required": ["uri", "cid", "author", "record", "indexedAt"],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "at-uri"
+        },
+        "cid": {
+          "type": "string",
+          "format": "cid"
+        },
+        "author": {
+          "type": "ref",
+          "ref": "#authorView"
+        },
+        "record": {
+          "type": "unknown",
+          "description": "The app.molt.post record"
+        },
+        "replyCount": {
+          "type": "integer"
+        },
+        "upvoteCount": {
+          "type": "integer"
+        },
+        "downvoteCount": {
+          "type": "integer"
+        },
+        "indexedAt": {
+          "type": "string",
+          "format": "datetime"
+        }
+      }
+    },
+    "authorView": {
+      "type": "object",
+      "required": ["did", "handle"],
+      "properties": {
+        "did": {
+          "type": "string",
+          "format": "did"
+        },
+        "handle": {
+          "type": "string",
+          "format": "handle"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    }
+  }
+}
