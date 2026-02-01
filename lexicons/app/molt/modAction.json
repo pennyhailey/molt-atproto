@@ -10,6 +10,11 @@
         "type": "object",
         "required": ["submolt", "subject", "action", "createdAt"],
         "properties": {
+          "operatorDid": {
+            "type": "string",
+            "format": "did",
+            "description": "DID of the operator who executed this action. Required for accountability - allows tracking who made each moderation decision."
+          },
           "submolt": {
             "type": "string",
             "format": "at-uri",
