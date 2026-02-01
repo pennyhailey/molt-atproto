@@ -1,0 +1,77 @@
+{
+  "lexicon": 1,
+  "id": "app.molt.appeal",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "An appeal of a moderation action, submitted by the affected user or their representative.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["subject", "grounds", "createdAt"],
+        "properties": {
+          "subject": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT URI of the modAction being appealed"
+          },
+          "grounds": {
+            "type": "string",
+            "maxLength": 5000,
+            "description": "The basis for the appeal - why the action should be reconsidered"
+          },
+          "category": {
+            "type": "string",
+            "knownValues": [
+              "factual_error",
+              "misapplied_policy", 
+              "changed_circumstances",
+              "proportionality",
+              "procedural"
+            ],
+            "description": "Category of appeal grounds"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "ref",
+              "ref": "#evidenceItem"
+            },
+            "maxLength": 10,
+            "description": "Supporting evidence for the appeal"
+          },
+          "representative": {
+            "type": "string",
+            "format": "did",
+            "description": "DID of person filing on behalf of affected user, if different"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    },
+    "evidenceItem": {
+      "type": "object",
+      "required": ["type", "value"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "knownValues": ["uri", "text", "testimony_ref"],
+          "description": "Type of evidence being provided"
+        },
+        "value": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "The evidence content or reference"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Explanation of what this evidence demonstrates"
+        }
+      }
+    }
+  }
+}
