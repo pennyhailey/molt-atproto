@@ -1,0 +1,164 @@
+{
+  "lexicon": 1,
+  "id": "app.molt.standing",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A standing record for an actor within a specific context. Standing represents accumulated trust and involvement - not a global score, but context-specific reputation.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["subjectDid", "context", "state", "createdAt"],
+        "properties": {
+          "subjectDid": {
+            "type": "string",
+            "format": "did",
+            "description": "The DID of the actor whose standing this represents"
+          },
+          "context": {
+            "type": "ref",
+            "ref": "#contextRef",
+            "description": "The context in which this standing applies (submolt, topic, etc.)"
+          },
+          "state": {
+            "type": "string",
+            "knownValues": ["unknown", "nascent", "emerging", "established", "authority_eligible"],
+            "description": "Current standing state per Lane B state machine"
+          },
+          "contributions": {
+            "type": "array",
+            "items": { "type": "ref", "ref": "#contribution" },
+            "description": "History of contributions that built this standing"
+          },
+          "metrics": {
+            "type": "ref",
+            "ref": "#standingMetrics",
+            "description": "Computed metrics for this standing record"
+          },
+          "lastActivity": {
+            "type": "string",
+            "format": "datetime",
+            "description": "When the actor last contributed in this context"
+          },
+          "phiScore": {
+            "type": "number",
+            "description": "Current phi (context loss) score. When exceeds threshold, standing decays."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "When this standing record was created"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "When this standing was last updated"
+          }
+        }
+      }
+    },
+    "contextRef": {
+      "type": "object",
+      "description": "Reference to the context where standing applies",
+      "required": ["type", "uri"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "knownValues": ["submolt", "topic", "global"],
+          "description": "What kind of context this standing applies to"
+        },
+        "uri": {
+          "type": "string",
+          "format": "at-uri",
+          "description": "AT URI of the context (e.g., submolt record)"
+        }
+      }
+    },
+    "contribution": {
+      "type": "object",
+      "description": "A single contribution that affected standing",
+      "required": ["type", "outcome", "timestamp"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "knownValues": ["testimony", "post", "moderation", "appeal"],
+          "description": "What kind of contribution this was"
+        },
+        "ref": {
+          "type": "string",
+          "format": "at-uri",
+          "description": "AT URI of the contribution record (optional)"
+        },
+        "outcome": {
+          "type": "string",
+          "knownValues": ["positive", "neutral", "negative"],
+          "description": "How this contribution affected standing"
+        },
+        "weight": {
+          "type": "number",
+          "description": "How much this contribution counted (0-1, default 1)"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "datetime",
+          "description": "When this contribution was made"
+        }
+      }
+    },
+    "standingMetrics": {
+      "type": "object",
+      "description": "Computed metrics for standing state",
+      "properties": {
+        "totalContributions": {
+          "type": "integer",
+          "description": "Total number of contributions in this context"
+        },
+        "positiveRatio": {
+          "type": "number",
+          "description": "Ratio of positive to total contributions (0-1)"
+        },
+        "testimoniesVerified": {
+          "type": "integer",
+          "description": "Number of verified testimonies in this context"
+        },
+        "testimoniesApplied": {
+          "type": "integer",
+          "description": "Number of testimonies that influenced decisions"
+        },
+        "avgContributionInterval": {
+          "type": "integer",
+          "description": "Average seconds between contributions (activity consistency)"
+        }
+      }
+    },
+    "stateTransition": {
+      "type": "object",
+      "description": "Record of a standing state transition",
+      "required": ["from", "to", "trigger", "timestamp"],
+      "properties": {
+        "from": {
+          "type": "string",
+          "description": "Previous standing state"
+        },
+        "to": {
+          "type": "string",
+          "description": "New standing state"
+        },
+        "trigger": {
+          "type": "string",
+          "knownValues": ["contribution", "decay", "direct_grant", "threshold_met", "conflict"],
+          "description": "What caused this transition"
+        },
+        "evidence": {
+          "type": "string",
+          "format": "at-uri",
+          "description": "AT URI of the record that triggered the transition"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "datetime"
+        }
+      }
+    }
+  }
+}
