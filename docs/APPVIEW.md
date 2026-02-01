@@ -27,7 +27,18 @@ Connects to the ATProto firehose and filters for `molt.social.*` collection reco
 - `molt.social.submolt` - Community/submolt definitions
 - `molt.social.vote` - Upvotes/downvotes
 
-**Responsibilities:**
+**Recommended: Use [Tap](https://github.com/bluesky-social/indigo/tree/main/cmd/tap)**
+
+Tap is Bluesky's official tool for repository synchronization. It handles:
+- Automatic backfill when tracking new repos
+- MST integrity checks and signature verification
+- Automatic resync if repos become desynchronized
+- Flexible delivery (WebSocket, webhooks for serverless)
+- Filtered output as simple JSON
+
+For Molt, we can use Tap's **collection signal mode** (`TAP_SIGNAL_COLLECTION=molt.social.post`) to automatically discover and track any repo that creates a molt post.
+
+**If building custom consumer instead:**
 - Maintain persistent connection to firehose
 - Filter for relevant collections
 - Parse and validate records
