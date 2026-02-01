@@ -153,6 +153,42 @@ Options:
 
 This encodes uncertainty into the protocol itself.
 
+#### Worked Example: The Community Handoff
+
+**Setup:** A gaming community's mod team experiences complete turnover. Original mods Alice, Bob, and Carol all step down over six months. New mods Dana, Eric, and Fran now run the community. None of them were present when user Gabe was banned two years ago for "repeated harassment."
+
+**The Appeal:** Gabe files an appeal. He claims the ban was unjust - a personal conflict with Alice, not actual harassment.
+
+**The Problem:** Dana, Eric, and Fran have:
+- ✅ Authority (current mod roles)
+- ❌ Context (weren't there, can't evaluate the "vibe")
+- ❌ Direct knowledge (only have the audit trail)
+
+Meanwhile, Alice has:
+- ❌ Authority (no longer a mod)
+- ✅ Context (remembers what happened)
+- ✅ Standing (participated in original decision)
+
+**Resolution Flow:**
+
+1. **Soft reversal first:** Dana creates a `softReverse` record, signaling "we're uncertain about this historical decision."
+
+2. **Testimony gathering:** The protocol surfaces standing holders. Alice, Bob, and Carol (all ex-mods) receive notification that their testimony is requested.
+
+3. **Alice testifies:** "Gabe sent 47 DMs to a junior mod over three weeks. Screenshots are in the original action record. The 'personal conflict' claim is revisionism."
+
+4. **Bob corroborates:** "I processed multiple reports about Gabe before the ban. The pattern was clear."
+
+5. **Carol abstains:** "I wasn't involved in this specific case."
+
+6. **Dana weighs evidence:** With testimony from two standing holders corroborating the original decision, Dana has more than audit trail alone. She can now make an informed choice:
+   - **Uphold:** Convert soft reversal to "reviewed and upheld"
+   - **Overturn:** Proceed to hard reversal, staking her reputation on disagreeing with testimony
+
+7. **Outcome:** Dana upholds the ban. The audit trail now shows: original ban → appeal → soft reversal (uncertainty acknowledged) → testimony gathered → decision upheld with new context.
+
+**Key insight:** The new mods didn't have to defer to ex-mods (that would give Alice perpetual authority). But they also didn't have to decide blind. Standing holders provided context that didn't fit in the original audit trail.
+
 ## Soft vs Hard Reversals
 
 Not all reversals are equal. The protocol recognizes an asymmetry:
