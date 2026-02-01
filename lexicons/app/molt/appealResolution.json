@@ -15,6 +15,11 @@
             "format": "at-uri",
             "description": "AT URI of the appeal being resolved"
           },
+          "modAction": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT URI of the original modAction. Optional but recommended for query efficiency - can be derived from appeal but explicit here enables direct indexing of all resolutions for a given action."
+          },
           "outcome": {
             "type": "string",
             "knownValues": [
