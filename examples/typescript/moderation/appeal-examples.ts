@@ -55,6 +55,7 @@ This is not misinformation but accurate reporting of published research.`,
 const factualErrorResolution = {
   $type: 'app.molt.appealResolution',
   appeal: 'at://did:plc:user123/app.molt.appeal/tid123',
+  modAction: 'at://did:plc:mod456/app.molt.modAction/xyz', // Direct ref for query efficiency
   outcome: 'overturned',
   reasoning: `Upon review, the user correctly cited a peer-reviewed study. 
 The original moderation action was based on incomplete verification.
@@ -103,6 +104,7 @@ I request the suspension be converted to a temporary measure.`,
 const proportionalityResolution = {
   $type: 'app.molt.appealResolution',
   appeal: 'at://did:plc:user789/app.molt.appeal/tid456',
+  modAction: 'at://did:plc:mod456/app.molt.modAction/suspension1', // Direct ref for query efficiency
   outcome: 'modified',
   reasoning: `The appeal raises valid points about proportionality.
 Given the user's previously clean record and willingness to modify behavior,
@@ -237,7 +239,7 @@ async function getModActionStatus(
   // 3. Determine current state
   
   // Pseudo-implementation:
-  const appeals = []; // await indexer.getAppeals(modActionUri)
+  const appeals: any[] = []; // await indexer.getAppeals(modActionUri)
   const status: AppealStatus = {
     modActionUri,
     currentState: 'active',
@@ -249,7 +251,7 @@ async function getModActionStatus(
     
     // Check for resolutions
     for (const appeal of appeals) {
-      const resolution = null; // await indexer.getResolution(appeal.uri)
+      const resolution: any = null; // await indexer.getResolution(appeal.uri)
       if (resolution) {
         // Update state based on resolution
         switch (resolution.outcome) {
